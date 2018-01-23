@@ -1,0 +1,100 @@
+<style lang="less">
+  .container{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+  }
+  #myMap{
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+</style>
+<template>
+  <view class="container">
+    <map id="myMap" latitude="{{latitude}}" longitude="{{longitude}}" scale="{{scale}}" bindregionchange="bindregionchange" polyline="{{polyline}}" markers="{{markers}}" controls="{{controls}}" bindmarkertap="bindmarkertap"  bindcontroltap="bindcontroltap" show-location/>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import testMixin from '../../mixins/test'
+  import AV from '../../utils/av-weapp-min';
+  export default class HomeIndex extends wepy.page {
+    config = {
+        navigationBarTitleText: '首页',
+        navigationBarBackgroundColor: '#fb891a',
+        navigationBarTextStyle: 'white',
+    }
+    components = {
+    }
+
+    mixins = [testMixin]
+
+    data = {
+        scale: 19,
+        longitude:0,
+        latitude:0
+    }
+
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+
+    methods = {
+    }
+
+    events = {
+      'index-emit': (...args) => {
+        let $event = args[args.length - 1]
+        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+      }
+    }
+
+    onLoad() {
+       wx.createMapContext("myMap");
+       var query = new AV.Query("TestObject");
+
+//       query.equalTo("title","工程师峰会");
+//       query.find().then((res)=>{
+//           console.log(res);
+//       })
+
+
+        wx.getLocation({
+            type: "gcj02",
+            success: (res) => {
+                this.setData({
+                    longitude: res.longitude,
+                    latitude: res.latitude
+                })
+            }
+        });
+        // 获取本地数据-用户信息
+        wx.getStorage({
+            key: 'userInfo',
+            // 能获取到则显示用户信息，并保持登录状态，不能就什么也不做
+            success: (res) => {
+                wx.hideLoading();
+                this.setData({
+                    userInfo: {
+                        avatarUrl: res.data.userInfo.avatarUrl,
+                        nickName: res.data.userInfo.nickName
+                    },
+                    bType: res.data.bType,
+                    actionText: res.data.actionText,
+                    lock: true
+                })
+            }
+        });
+
+    }
+  }
+</script>

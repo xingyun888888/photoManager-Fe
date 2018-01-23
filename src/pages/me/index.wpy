@@ -1,0 +1,99 @@
+<style lang="less">
+    .userinfo {
+        margin-top:50rpx;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .userinfo-avatar {
+        width: 100rpx;
+        height:100rpx;
+        border-radius: 50%;
+    }
+
+    .userinfo-nickname {
+        margin-top:20rpx;
+        color: #999;
+        font-size:28rpx;
+    }
+    .my-position{
+        width:100%;
+        padding:30rpx 80rpx;
+        font-size:24rpx;
+        text-align:left;
+        view{
+            height:40rpx;
+            line-height: 40rpx;
+        }
+    }
+</style>
+<template>
+    <view class="container">
+        <view class="userinfo" @tap="handleViewTap">
+            <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
+            <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
+        </view>
+    </view>
+    <view class="my-position">
+        <view>
+            我的手机型号是:{{systemInfo.model}}
+        </view>
+        <view>
+            我的手机品牌是:{{systemInfo.brand}}
+        </view>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    import testMixin from '../../mixins/test'
+    import AV from '../../utils/av-weapp-min';
+    export default class HomeIndex extends wepy.page {
+        config = {
+            navigationBarTitleText: '我',
+            navigationBarBackgroundColor: '#fb891a',
+            navigationBarTextStyle: 'white',
+        }
+        components = {
+        }
+
+
+        data = {
+            userInfo:null,
+            systemInfo:{}
+        }
+
+        methods = {
+        }
+
+        getMySystemInfo(){
+            let self = this;
+            wx.getSystemInfo({
+                success: function(res) {
+                    console.log(res.model)
+                    console.log(res.pixelRatio)
+                    console.log(res.windowWidth)
+                    console.log(res.windowHeight)
+                    console.log(res.language)
+                    console.log(res.version)
+                    console.log(res.platform)
+                    self.systemInfo = res;
+
+                }
+            })
+        }
+
+        onLoad() {
+            let self = this
+            this.$parent.getUserInfo(function (userInfo) {
+                if (userInfo) {
+                    self.userInfo = userInfo
+                }
+                self.$apply()
+            })
+            this.getMySystemInfo();
+
+        }
+    }
+</script>

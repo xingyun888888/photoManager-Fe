@@ -1,0 +1,40 @@
+<style lang="less">
+    .container{
+        position: relative;
+        width: 100%;
+        height: 100vh;
+    }
+</style>
+<template>
+    <view class="container">
+       签到页面
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    import testMixin from '../../mixins/test'
+    import AV from '../../utils/av-weapp-min';
+    export default class SignIndex extends wepy.page {
+        config = {
+            navigationBarTitleText: '签到',
+            navigationBarBackgroundColor: '#fb891a',
+            navigationBarTextStyle: 'white',
+        }
+        components = {
+        }
+
+
+        data = {
+            userInfo:null
+        }
+
+        methods = {
+        }
+
+
+        onLoad() {
+
+        }
+    }
+</script>
