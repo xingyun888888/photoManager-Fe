@@ -25,6 +25,7 @@
   import wepy from 'wepy'
   import testMixin from '../../mixins/test'
   import AV from '../../utils/av-weapp-min';
+  let QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
   export default class HomeIndex extends wepy.page {
     config = {
         navigationBarTitleText: '首页',
@@ -39,7 +40,8 @@
     data = {
         scale: 19,
         longitude:0,
-        latitude:0
+        latitude:0,
+        position:""
     }
 
     computed = {
@@ -59,24 +61,58 @@
     }
 
     onLoad() {
+
+       let self = this;
        wx.createMapContext("myMap");
-       var query = new AV.Query("TestObject");
+        // 实例化API核心类
+       let qqmapsdk = new QQMapWX({
+            key: 'HUMBZ-XNSKP-UHFDU-LZTEU-I263S-TVF7J'
+        });
+        let TestObject = AV.Object.extend('TestObject');
+        let testObject = new TestObject();
 
 //       query.equalTo("title","工程师峰会");
 //       query.find().then((res)=>{
 //           console.log(res);
 //       })
 
+        this.$parent.getUserInfo(function (userInfo) {
+            if (userInfo) {
+                self.userInfo = userInfo
+                wx.getLocation({
+                    type: "gcj02",
+                    success: (positionRes) => {
+                        console.log(positionRes);
+                        self.setData({
+                            longitude: positionRes.longitude,
+                            latitude: positionRes.latitude
+                        })
+                        qqmapsdk.reverseGeocoder({
+                            location: {
+                                latitude: positionRes.latitude,
+                                longitude: positionRes.longitude
+                            },
+                            success: function(result) {
+                                console.info("************");
+                                console.log(wepy.$instance.globalData.userInfo);
+                                console.log(result.result.address);
+                                wepy.$instance.globalData.position = result.result.address;
+                                testObject.save({position:result.result.address,name:userInfo.nickName});
+                            },
+                            fail: function(res) {
+                                console.log(res);
+                            },
+                            complete: function(res) {
+                                console.log(res);
+                            }
+                        });
+                    }
+                });
 
-        wx.getLocation({
-            type: "gcj02",
-            success: (res) => {
-                this.setData({
-                    longitude: res.longitude,
-                    latitude: res.latitude
-                })
             }
-        });
+            self.$apply()
+        })
+
         // 获取本地数据-用户信息
         wx.getStorage({
             key: 'userInfo',
@@ -92,6 +128,7 @@
                     actionText: res.data.actionText,
                     lock: true
                 })
+
             }
         });
 
