@@ -47,7 +47,6 @@
 
 <script>
     import wepy from 'wepy'
-    import testMixin from '../../mixins/test'
     import AV from '../../utils/av-weapp-min';
     export default class HomeIndex extends wepy.page {
         config = {

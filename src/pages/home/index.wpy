@@ -23,8 +23,8 @@
 
 <script>
   import wepy from 'wepy'
-  import testMixin from '../../mixins/test'
   import AV from '../../utils/av-weapp-min';
+  let  QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
   export default class HomeIndex extends wepy.page {
     config = {
         navigationBarTitleText: '首页',
@@ -34,7 +34,6 @@
     components = {
     }
 
-    mixins = [testMixin]
 
     data = {
         scale: 19,
@@ -43,9 +42,6 @@
     }
 
     computed = {
-      now () {
-        return +new Date()
-      }
     }
 
     methods = {
@@ -59,6 +55,11 @@
     }
 
     onLoad() {
+        // 实例化API核心类
+        let qqmapsdk = new QQMapWX({
+            key: 'HUMBZ-XNSKP-UHFDU-LZTEU-I263S-TVF7J'
+        });
+
        wx.createMapContext("myMap");
        var query = new AV.Query("TestObject");
 
@@ -75,6 +76,21 @@
                     longitude: res.longitude,
                     latitude: res.latitude
                 })
+                qqmapsdk.reverseGeocoder({
+				    location: {
+				        latitude: res.longitude,
+				        longitude: res.latitude
+				    },
+				    success: function(res) {
+				        console.log(res);
+				    },
+				    fail: function(res) {
+				        console.log(res);
+				    },
+				    complete: function(res) {
+				        console.log(res);
+				    }
+				});
             }
         });
         // 获取本地数据-用户信息
