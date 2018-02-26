@@ -1,27 +1,42 @@
 <style lang="less">
+    .container{
+        position:relative;
+        top:0;
+        padding-top:30rpx;
+        box-sizing:border-box;
+        width:100vw;
+        height:100vh;
+        .page-bg{
+            width:100%;
+            height:100%;
+            position:absolute;
+            top:0;
+            left:0;
+            z-index:-1000;
+        }
+    }
     .userinfo {
-        margin-top:50rpx;
         display: flex;
         flex-direction: column;
         align-items: center;
     }
 
     .userinfo-avatar {
-        width: 100rpx;
-        height:100rpx;
+        width: 250rpx;
+        height:250rpx;
         border-radius: 50%;
     }
 
     .userinfo-nickname {
         margin-top:20rpx;
-        color: #999;
-        font-size:28rpx;
+        color: #eee;
+        font-size:35rpx;
     }
     .my-position{
         width:100%;
-        padding:30rpx 80rpx;
-        font-size:24rpx;
-        text-align:left;
+        margin-top:20rpx;
+        font-size:30rpx;
+        text-align:center;
         view{
             height:40rpx;
             line-height: 40rpx;
@@ -30,18 +45,19 @@
 </style>
 <template>
     <view class="container">
+        <image class="page-bg"  src="{{'/images/my-can.jpg'}}" alt=""/>
         <view class="userinfo" @tap="handleViewTap">
             <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
             <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
-        </view>
-    </view>
-    <view class="my-position">
-        <view>
-            我的手机型号是:{{systemInfo.model}}
-        </view>
-        <view>
-            我的手机品牌是:{{systemInfo.brand}}
-        </view>
+        </view>   
+       <!--  <view class="my-position">
+            <view>
+                我的手机型号是:{{systemInfo.model}}
+            </view>
+            <view>
+                我的手机品牌是:{{systemInfo.brand}}
+            </view>
+        </view> -->
     </view>
 </template>
 
@@ -50,7 +66,7 @@
     import AV from '../../utils/av-weapp-min';
     export default class HomeIndex extends wepy.page {
         config = {
-            navigationBarTitleText: '我',
+            navigationBarTitleText: '我的主页',
             navigationBarBackgroundColor: '#fb891a',
             navigationBarTextStyle: 'white',
         }
@@ -64,6 +80,18 @@
         }
 
         methods = {
+            onShareAppMessage: function (res) {
+              return {
+                title: '我的主页',
+                path: '/pages/me/index',
+                success: function(res) {
+                  // 转发成功
+                },
+                fail: function(res) {
+                  // 转发失败
+                }
+              }
+            }
         }
 
         getMySystemInfo(){
@@ -93,6 +121,9 @@
             })
             this.getMySystemInfo();
 
+        }
+        onShow(){
+            // wepy.$instance.globalData.audioCtx&&wepy.$instance.globalData.audioCtx.pause();
         }
     }
 </script>

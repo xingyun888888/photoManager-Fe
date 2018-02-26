@@ -1,0 +1,84 @@
+<style lang="less">
+    .container{
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        image.detail-bg{
+            margin-top:-15rpx;
+            vertical-align: top;
+            width:100%;
+        }
+        .my-video{
+            width:100%;
+            video{
+                width:100%;
+            }
+        }
+        .returnHome{
+            width:50px;
+            heigth:50px;
+            position:absolute;
+            index:2000;
+            bottom:20rpx;
+            left:10rpx;
+        }
+    }
+</style>
+<template>
+    <view class="container">
+       <view class="my-video" wx:if="{{videoIndex==1}}">
+          <video src="{{'http://peipei521.oss-cn-shenzhen.aliyuncs.com/20180113.mp4'}}" custom-cache="{{false}}" controls ></video>
+        </view>
+       <view class="my-video" wx:if="{{videoIndex==2}}">
+          <video src="{{'http://peipei521.oss-cn-shenzhen.aliyuncs.com/peipei2.mp4'}}" custom-cache="{{false}}" controls ></video>
+        </view>
+       <view class="my-video" wx:if="{{videoIndex==3}}">
+          <video src="{{'http://peipei521.oss-cn-shenzhen.aliyuncs.com/shenying.mp4'}}" custom-cache="{{false}}" controls ></video>
+        </view>
+        <image class="detail-bg" src="{{'/images/video-detail-bg.png'}}" mode="widthFix" alt=""/>
+        <image class="returnHome" src="{{'/images/icon_home.png'}}" alt=""/>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    import AV from '../../utils/av-weapp-min';
+    export default class SignDetail extends wepy.page {
+        config = {
+            navigationBarTitleText: '视频',
+            navigationBarBackgroundColor: '#fb891a',
+            navigationBarTextStyle: 'white',
+        }
+        components = {
+        }
+
+
+        data = {
+            userInfo:null,
+            videoIndex:1
+        }
+
+        methods = {
+            onShareAppMessage: function (res) {
+              return {
+                title: '我的视频',
+                path: '/pages/sign/detail',
+                success: function(res) {
+                  // 转发成功
+                },
+                fail: function(res) {
+                  // 转发失败
+                }  
+              }
+            }
+        }
+
+
+        onLoad(option) {
+           this.videoIndex = option.videoIndex;
+        }
+        onShow(){
+            wepy.$instance.globalData.audioCtx&&wepy.$instance.globalData.audioCtx.pause();
+        }
+    }
+</script>

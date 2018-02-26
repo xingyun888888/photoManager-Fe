@@ -1,13 +1,38 @@
 <style lang="less">
     .container{
-        position: relative;
-        width: 100%;
+        width: 100vw;
         height: 100vh;
+        background:#e5e5e5;
+        .my-img{
+            width:100%;
+            box-sizing:border-box;
+            padding:20rpx;
+            background:#fff;
+            image{
+                width:100%;
+                border-radius:10rpx;  
+                box-shadow:0 0 10rpx #ccc;
+            }
+        }
     }
 </style>
 <template>
     <view class="container">
-       签到页面
+       <view class="my-img">
+           <navigator url="./detail?videoIndex=1">       
+                <image src="/images/IMG_03401.png" mode="widthFix" class="image" onlongtap="onlongtap" />
+           </navigator>
+        </view>
+       <view class="my-img">
+           <navigator url="./detail?videoIndex=2">  
+            <image src="/images/IMG_00681.png" mode="widthFix" class="image" onlongtap="onlongtap" />
+           </navigator>
+        </view>
+       <view class="my-img">
+           <navigator url="./detail?videoIndex=3">  
+            <image src="/images/IMG_03901.png" mode="widthFix" class="image" onlongtap="onlongtap" />
+           </navigator> 
+        </view>
     </view>
 </template>
 
@@ -16,7 +41,7 @@
     import AV from '../../utils/av-weapp-min';
     export default class SignIndex extends wepy.page {
         config = {
-            navigationBarTitleText: '签到',
+            navigationBarTitleText: '相册',
             navigationBarBackgroundColor: '#fb891a',
             navigationBarTextStyle: 'white',
         }
@@ -29,11 +54,26 @@
         }
 
         methods = {
+            onShareAppMessage: function (res) {
+              return {
+                title: '我的相册',
+                path: '/pages/sign/index',
+                success: function(res) {
+                  // 转发成功
+                },
+                fail: function(res) {
+                  // 转发失败
+                }
+              }
+            }
         }
 
 
         onLoad() {
 
+        }
+        onShow(){
+           wepy.$instance.globalData.audioCtx&&wepy.$instance.globalData.audioCtx.play(); 
         }
     }
 </script>
