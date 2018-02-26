@@ -16,19 +16,31 @@
         }
     }
     .userinfo {
+<<<<<<< HEAD
+=======
+        margin-top:50rpx;
+        box-sizing:border-box;
+>>>>>>> 93bf6a963b1d1dd8984f8919a88375aa08b73513
         display: flex;
         flex-direction: column;
         align-items: center;
     }
 
     .userinfo-avatar {
+<<<<<<< HEAD
         width: 250rpx;
         height:250rpx;
+=======
+        width: 100rpx;
+        height:100rpx;
+        box-sizing:border-box;
+>>>>>>> 93bf6a963b1d1dd8984f8919a88375aa08b73513
         border-radius: 50%;
     }
 
     .userinfo-nickname {
         margin-top:20rpx;
+<<<<<<< HEAD
         color: #eee;
         font-size:35rpx;
     }
@@ -37,6 +49,18 @@
         margin-top:20rpx;
         font-size:30rpx;
         text-align:center;
+=======
+        box-sizing:border-box;
+        color: #999;
+        font-size:28rpx;
+    }
+    .my-position{
+        width:100%;
+        box-sizing:border-box;
+        padding:30rpx 80rpx;
+        font-size:24rpx;
+        text-align:left;
+>>>>>>> 93bf6a963b1d1dd8984f8919a88375aa08b73513
         view{
             height:40rpx;
             line-height: 40rpx;
@@ -49,6 +73,7 @@
         <view class="userinfo" @tap="handleViewTap">
             <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
             <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
+<<<<<<< HEAD
         </view>   
        <!--  <view class="my-position">
             <view>
@@ -58,6 +83,20 @@
                 我的手机品牌是:{{systemInfo.brand}}
             </view>
         </view> -->
+=======
+        </view>
+    </view>
+    <view class="my-position">
+        <view>
+            我的手机型号是:{{systemInfo.model}}
+        </view>
+        <view>
+            我的手机品牌是:{{systemInfo.brand}}
+        </view>
+        <view>
+            我当前的位置是:{{position}}
+        </view>
+>>>>>>> 93bf6a963b1d1dd8984f8919a88375aa08b73513
     </view>
 </template>
 
@@ -76,7 +115,8 @@
 
         data = {
             userInfo:null,
-            systemInfo:{}
+            systemInfo:{},
+            position:''
         }
 
         methods = {
@@ -120,7 +160,8 @@
                 self.$apply()
             })
             this.getMySystemInfo();
-
+            this.position = wepy.$instance.globalData.position;
+            this.$apply();
         }
         onShow(){
             // wepy.$instance.globalData.audioCtx&&wepy.$instance.globalData.audioCtx.pause();
