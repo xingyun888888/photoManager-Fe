@@ -49,6 +49,7 @@
         <view class="userinfo" @tap="handleViewTap">
             <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
             <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
+<<<<<<< HEAD
         </view>   
        <!--  <view class="my-position">
             <view>
@@ -58,6 +59,20 @@
                 我的手机品牌是:{{systemInfo.brand}}
             </view>
         </view> -->
+=======
+        </view>
+    </view>
+    <view class="my-position">
+        <view>
+            我的手机型号是:{{systemInfo.model}}
+        </view>
+        <view>
+            我的手机品牌是:{{systemInfo.brand}}
+        </view>
+        <view>
+            我当前的位置是:{{position}}
+        </view>
+>>>>>>> 93bf6a963b1d1dd8984f8919a88375aa08b73513
     </view>
 </template>
 

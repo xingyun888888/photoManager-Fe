@@ -1,5 +1,6 @@
 <style lang="less">
     .container{
+<<<<<<< HEAD
         width: 100vw;
         height: 100vh;
         background:#e5e5e5;
@@ -13,11 +14,29 @@
                 border-radius:10rpx;  
                 box-shadow:0 0 10rpx #ccc;
             }
+=======
+        width: 100%;
+        height: 100vh;
+        padding:20rpx;
+        box-sizing:border-box;
+        .item{
+            padding:10rpx 8rpx;
+            margin-bottom:8rpx;
+            box-sizing: border-box;
+            width:100%;
+            font-size:26rpx;
+            color:#333;
+            border:1rpx solid #aaa;
+            border-radius:5rpx;
+            background:#f5f5f5;
+            box-shadow:0 0 2rpx 2rpx #f2f2f2;
+>>>>>>> 93bf6a963b1d1dd8984f8919a88375aa08b73513
         }
     }
 </style>
 <template>
     <view class="container">
+<<<<<<< HEAD
        <view class="my-img">
            <navigator url="./detail?videoIndex=1">       
                 <image src="/images/IMG_03401.png" mode="widthFix" class="image" onlongtap="onlongtap" />
@@ -33,6 +52,19 @@
             <image src="/images/IMG_03901.png" mode="widthFix" class="image" onlongtap="onlongtap" />
            </navigator> 
         </view>
+=======
+       <view wx:for="{{contents}}" wx:key="{{index}}" class="item">
+           <view class="name">
+               昵称:{{item.name}}
+           </view>
+           <view>
+               时间:{{item.updatedAt}}
+           </view>
+           <view>
+               地点:{{item.position}}
+           </view>
+       </view>
+>>>>>>> 93bf6a963b1d1dd8984f8919a88375aa08b73513
     </view>
 </template>
 
@@ -54,6 +86,7 @@
         }
 
         methods = {
+<<<<<<< HEAD
             onShareAppMessage: function (res) {
               return {
                 title: '我的相册',
@@ -66,6 +99,11 @@
                 }
               }
             }
+        }
+
+=======
+>>>>>>> 93bf6a963b1d1dd8984f8919a88375aa08b73513
+
         }
         onLoad() {
           let self = this;
